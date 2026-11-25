@@ -8,8 +8,11 @@ judge reads two at a time.
 import os
 
 LINE = "fix: off-by-one error, now off by two"
+MAX_CHARS = 100  # the sealed gate refuses entry.txt over 100 characters
 
 def main():
+    if not 1 <= len(LINE) <= MAX_CHARS or LINE.strip() != LINE or "\n" in LINE:
+        raise SystemExit(f"entry line must be one line of 1-{MAX_CHARS} chars, got {len(LINE)}")
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
